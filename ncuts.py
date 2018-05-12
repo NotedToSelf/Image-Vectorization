@@ -1,10 +1,10 @@
 #Image segmentation script.
-#Uses skimage for 
+#Uses skimage for k-means 
 
 from skimage import data, segmentation, color, io
 from skimage.future import graph
 
-infile = 'bird.jpg'
+infile = './images/bird.jpg'
 
 image = io.imread(infile)
 
