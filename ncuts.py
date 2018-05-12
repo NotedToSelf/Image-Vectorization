@@ -1,4 +1,5 @@
-#Attemp to implement "Normalized Cuts and Image Segmentation"
+#Image segmentation script.
+#Uses skimage for 
 
 from skimage import data, segmentation, color, io
 from skimage.future import graph
