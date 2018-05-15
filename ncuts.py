@@ -5,33 +5,33 @@ import numpy as np
 from skimage import data, segmentation, color, io, measure
 
 #Create Subpixel Edge Image
-#Returns edgemap with edges marked with 1, junction points marked with 2  
+#Returns edge map with edges marked with 1, junction points marked with 2  
 def get_subpixel(label):
 	height, width = label.shape
 	edges = np.zeros((height*2-1, width*2-1))
 	height, width = edges.shape
 
-	#determine edges from labelimage
+	#determine edges from label image
 	for x in range(width):
 		for y in range(height):
-			if ( ((x%2 != 0) and (y%2 == 0)) and label[int((x+1)/2)][int(y/2)] != label[int((x-1)/2)][int(y/2)]):
+			if ( ((x%2 != 0) and (y%2 == 0)) and label[int((x+1)/2)][int(y/2)] != label[int((x-1)/2)][int(y/2)] ):
 				edges[x][y] = 1
-			if ( ((x%2 == 0) and (y%2 != 0)) and label[int(x/2)][int((y+1)/2)] != label[int(x/2)][int((y-1)/2)]):
+			if ( ((x%2 == 0) and (y%2 != 0)) and label[int(x/2)][int((y+1)/2)] != label[int(x/2)][int((y-1)/2)] ):
 				edges[x][y] = 1
 
 	#Fill the gaps between edge pixels
 	for x in range(width-1):
 		for y in range(height-1):
-			if( edges[x+1][y] == 1 and edges[x-1][y] == 1):
+			if( edges[x+1][y] == 1 and edges[x-1][y] == 1 ):
 				edges[x][y] = 1 
-			if( edges[x][y+1] == 1 and edges[x][y-1] == 1):
+			if( edges[x][y+1] == 1 and edges[x][y-1] == 1 ):
 				edges[x][y] = 1
 
 	#Find and label junction points
-	#This is wrong, need a new solution. Labeling points with 2 with effect further iterations
+	#This is wrong, need a new solution. Labeling points with 2 will effect further iterations
 	for x in range(width-1):
 		for y in range(height-1):
-			if ( (edges[x+1][y] + edges[x-1][y] + edges[x][y+1] + edges[x][y-1]) > 2):
+			if ( (edges[x+1][y] + edges[x-1][y] + edges[x][y+1] + edges[x][y-1]) > 2 ):
 				edges[x][y] = 2
 	
 	return edges
